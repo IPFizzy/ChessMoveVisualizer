@@ -14,11 +14,6 @@ using ChessBoardClassLibrary.Services.BusinessLogicLayer;
 // Start of Main Method
 //---------------------------------------------------------------
 
-// Declare and initialize
-string piece = "";
-Tuple<int, int>? result;
-BoardLogic boardLogic = new BoardLogic();
-
 // Print a welcome message for the user
 Console.WriteLine("Hello, Chess Players!");
 
@@ -29,14 +24,24 @@ BoardModel board = new BoardModel(8);
 Utility.PrintBoard(board);
 
 // Prompt the user for the type of chess piece
-Console.Write("Enter the type of piece you want to place (Knight, Rook, Bishop, Queen, King): ");
-piece = Console.ReadLine();
+Console.Write("Enter a chess piece: King, Queen, Bishop, Knight, or Rook: ");
+string piece = Console.ReadLine() ?? "";
+
+while (piece != "King" && piece != "Queen" && piece != "Bishop" &&
+       piece != "Knight" && piece != "Rook")
+{
+    Console.WriteLine("Invalid chess piece. Please enter King, Queen, Bishop, Knight, or Rook.");
+    Console.Write("Enter a chess piece: King, Queen, Bishop, Knight, or Rook: ");
+    piece = Console.ReadLine() ?? "";
+}
 
 // Prompt the user for the location of the chess piece
-result = Utility.GetRowAndCol();
+Tuple<int, int> rowAndCol = Utility.GetRowAndCol(board);
 
 // Mark the legal moves based on the input
-board = boardLogic.MarkLegalMoves(board, board.Grid[result.Item1, result.Item2], piece);
+BoardLogic boardLogic = new BoardLogic();
+CellModel currentCell = board.Grid[rowAndCol.Item1, rowAndCol.Item2];
+board = boardLogic.MarkLegalMoves(board, currentCell, piece);
 
 // Print out the new chess board
 Utility.PrintBoard(board);
@@ -57,9 +62,35 @@ public static class Utility
     /// <param name="board"></param>
     internal static void PrintBoard(BoardModel board)
     {
+        // Add space before the board
+        Console.WriteLine();
+
+        // Print the column headers
+        Console.Write("   ");
+
+        for (int col = 0; col < board.Size; col++)
+        {
+            Console.Write($"  {col} ");
+        }
+
+        Console.WriteLine();
+
+        // Print the top border
+        Console.Write("   ");
+
+        for (int col = 0; col < board.Size; col++)
+        {
+            Console.Write("+---");
+        }
+
+        Console.WriteLine("+");
+
         // Loop over the rows of the board
         for (int row = 0; row < board.Size; row++)
         {
+            // Print the row number
+            Console.Write($" {row} ");
+
             // Loop over the columns of the board
             for (int col = 0; col < board.Size; col++)
             {
@@ -70,40 +101,64 @@ public static class Utility
                 if (cell.IsLegalNextMove)
                 {
                     // Print a + for a legal move
-                    Console.Write(" + ");
+                    Console.Write("| + ");
                 }
 
                 // Check if there is a piece occupying the cell
                 else if (cell.PieceOccupyingCell != "")
                 {
                     // Print the chess piece letter
-                    Console.Write($" {cell.PieceOccupyingCell} ");
+                    Console.Write($"| {cell.PieceOccupyingCell} ");
                 }
                 else
                 {
-                    // Print a . for anything else
-                    Console.Write(" . ");
+                    // Print a blank space for anything else
+                    Console.Write("|   ");
                 }
             }
 
-            // Start a new line after every row
-            Console.WriteLine();
+            Console.WriteLine("|");
+
+            // Print the row border
+            Console.Write("   ");
+
+            for (int col = 0; col < board.Size; col++)
+            {
+                Console.Write("+---");
+            }
+
+            Console.WriteLine("+");
         }
     } // End of PrintBoard method
 
     /// <summary>
     /// Get the row and column for the piece.
     /// </summary>
+    /// <param name="board"></param>
     /// <returns></returns>
-    internal static Tuple<int, int> GetRowAndCol()
+    internal static Tuple<int, int> GetRowAndCol(BoardModel board)
     {
-        // Get the row from the user
-        Console.Write("Enter the row number of the piece: ");
-        int row = int.Parse(Console.ReadLine());
+        // Create variables to store the row and column
+        int row;
+        int col;
 
-        // Get the column from the user
+        // Get a valid row from the user
+        Console.Write("Enter the row number of the piece: ");
+
+        while (!int.TryParse(Console.ReadLine(), out row) || row < 0 || row >= board.Size)
+        {
+            Console.WriteLine("Invalid row. Please enter a number between 0 and 7.");
+            Console.Write("Enter the row number of the piece: ");
+        }
+
+        // Get a valid column from the user
         Console.Write("Enter the column number of the piece: ");
-        int col = int.Parse(Console.ReadLine());
+
+        while (!int.TryParse(Console.ReadLine(), out col) || col < 0 || col >= board.Size)
+        {
+            Console.WriteLine("Invalid column. Please enter a number between 0 and 7.");
+            Console.Write("Enter the column number of the piece: ");
+        }
 
         // Return the data
         return Tuple.Create(row, col);
