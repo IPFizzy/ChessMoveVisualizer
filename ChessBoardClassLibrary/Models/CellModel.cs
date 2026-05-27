@@ -2,7 +2,7 @@
  * Keon Bushman
  * CST - 250
  * 05/31/2026
- * Vehicle Class Library
+ * Chess Board Project
  * Activity 2
  * Activity 2 Guide
  */
