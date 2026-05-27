@@ -8,6 +8,7 @@
  */
 
 using ChessBoardClassLibrary.Models;
+using ChessBoardClassLibrary.Services.BusinessLogicLayer;
 
 //---------------------------------------------------------------
 // Start of Main Method
@@ -16,6 +17,7 @@ using ChessBoardClassLibrary.Models;
 // Declare and initialize
 string piece = "";
 Tuple<int, int>? result;
+BoardLogic boardLogic = new BoardLogic();
 
 // Print a welcome message for the user
 Console.WriteLine("Hello, Chess Players!");
@@ -34,8 +36,10 @@ piece = Console.ReadLine();
 result = Utility.GetRowAndCol();
 
 // Mark the legal moves based on the input
+board = boardLogic.MarkLegalMoves(board, board.Grid[result.Item1, result.Item2], piece);
 
 // Print out the new chess board
+Utility.PrintBoard(board);
 
 //---------------------------------------------------------------
 // End of Main Method
