@@ -85,15 +85,31 @@ namespace ChessBoardClassLibrary.Services.BusinessLogicLayer
                     break;
 
                 case "rook":
+                    // Set the occupying property for the current cell
+                    board.Grid[currentCell.Row, currentCell.Column].PieceOccupyingCell = "R";
+                    // Mark the valid rook moves
+                    board = MarkValidRookMoves(board, currentCell);
                     break;
 
                 case "bishop":
+                    // Set the occupying property for the current cell
+                    board.Grid[currentCell.Row, currentCell.Column].PieceOccupyingCell = "B";
+                    // Mark the valid bishop moves
+                    board = MarkValidBishopMoves(board, currentCell);
                     break;
 
                 case "queen":
+                    // Set the occupying property for the current cell
+                    board.Grid[currentCell.Row, currentCell.Column].PieceOccupyingCell = "Q";
+                    // Mark the valid queen moves
+                    board = MarkValidQueenMoves(board, currentCell);
                     break;
 
                 case "king":
+                    // Set the occupying property for the current cell
+                    board.Grid[currentCell.Row, currentCell.Column].PieceOccupyingCell = "K";
+                    // Mark the valid king moves
+                    board = MarkValidKingMoves(board, currentCell);
                     break;
 
                 default:
@@ -129,6 +145,105 @@ namespace ChessBoardClassLibrary.Services.BusinessLogicLayer
                 {
                     // If the cell is on the board, label it as a possible move for the knight
                     board.Grid[currentCell.Row + knightRowMoves[i], currentCell.Column + knightColMoves[i]].IsLegalNextMove = true;
+                }
+            }
+
+            return board;
+        }
+
+        /// <summary>
+        /// Mark the valid moves for the rook.
+        /// </summary>
+        /// <param name="board"></param>
+        /// <param name="currentCell"></param>
+        /// <returns></returns>
+        private BoardModel MarkValidRookMoves(BoardModel board, CellModel currentCell)
+        {
+            // Loop through every cell on the board
+            foreach (CellModel cell in board.Grid)
+            {
+                // Check if the cell is in the same row or same column
+                if (cell.Row == currentCell.Row || cell.Column == currentCell.Column)
+                {
+                    // Do not mark the current cell as a legal move
+                    if (cell.Row != currentCell.Row || cell.Column != currentCell.Column)
+                    {
+                        cell.IsLegalNextMove = true;
+                    }
+                }
+            }
+
+            return board;
+        }
+
+        /// <summary>
+        /// Mark the valid moves for the bishop.
+        /// </summary>
+        /// <param name="board"></param>
+        /// <param name="currentCell"></param>
+        /// <returns></returns>
+        private BoardModel MarkValidBishopMoves(BoardModel board, CellModel currentCell)
+        {
+            // Loop through every cell on the board
+            foreach (CellModel cell in board.Grid)
+            {
+                // Check if the cell is diagonal from the current cell
+                if (Math.Abs(cell.Row - currentCell.Row) == Math.Abs(cell.Column - currentCell.Column))
+                {
+                    // Do not mark the current cell as a legal move
+                    if (cell.Row != currentCell.Row || cell.Column != currentCell.Column)
+                    {
+                        cell.IsLegalNextMove = true;
+                    }
+                }
+            }
+
+            return board;
+        }
+
+        /// <summary>
+        /// Mark the valid moves for the queen.
+        /// </summary>
+        /// <param name="board"></param>
+        /// <param name="currentCell"></param>
+        /// <returns></returns>
+        private BoardModel MarkValidQueenMoves(BoardModel board, CellModel currentCell)
+        {
+            // Mark the rook style moves for the queen
+            board = MarkValidRookMoves(board, currentCell);
+
+            // Mark the bishop style moves for the queen
+            board = MarkValidBishopMoves(board, currentCell);
+
+            return board;
+        }
+
+        /// <summary>
+        /// Mark the valid moves for the king.
+        /// </summary>
+        /// <param name="board"></param>
+        /// <param name="currentCell"></param>
+        /// <returns></returns>
+        private BoardModel MarkValidKingMoves(BoardModel board, CellModel currentCell)
+        {
+            // Loop through the possible row changes
+            for (int rowOffset = -1; rowOffset <= 1; rowOffset++)
+            {
+                // Loop through the possible column changes
+                for (int colOffset = -1; colOffset <= 1; colOffset++)
+                {
+                    // Calculate the possible move location
+                    int newRow = currentCell.Row + rowOffset;
+                    int newCol = currentCell.Column + colOffset;
+
+                    // Do not mark the current cell as a legal move
+                    bool isCurrentCell = rowOffset == 0 && colOffset == 0;
+
+                    // Check if the move is on the board and not the current cell
+                    if (!isCurrentCell && IsOnBoard(board, newRow, newCol))
+                    {
+                        board.Grid[newRow, newCol].IsLegalNextMove = true;
+                    }
                 }
             }
 
