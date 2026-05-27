@@ -27,12 +27,17 @@ Utility.PrintBoard(board);
 Console.Write("Enter a chess piece: King, Queen, Bishop, Knight, or Rook: ");
 string piece = Console.ReadLine() ?? "";
 
-while (piece != "King" && piece != "Queen" && piece != "Bishop" &&
-       piece != "Knight" && piece != "Rook")
+// Convert the user's input to lowercase for validation
+piece = piece.ToLower();
+
+while (piece != "king" && piece != "queen" && piece != "bishop" &&
+       piece != "knight" && piece != "rook")
 {
     Console.WriteLine("Invalid chess piece. Please enter King, Queen, Bishop, Knight, or Rook.");
     Console.Write("Enter a chess piece: King, Queen, Bishop, Knight, or Rook: ");
+
     piece = Console.ReadLine() ?? "";
+    piece = piece.ToLower();
 }
 
 // Prompt the user for the location of the chess piece
