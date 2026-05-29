@@ -1,4 +1,5 @@
 <Solution>
   <Project Path="ChessBoardClassLibrary/ChessBoardClassLibrary.csproj" />
   <Project Path="ChessBoardConsoleApp/ChessBoardConsoleApp.csproj" />
+  <Project Path="ChessBoardGUIApp/ChessBoardGUIApp.csproj" Id="ae8e7f63-e0cb-4d79-afbd-1c594b6b5f0f" />
 </Solution>
