@@ -32,6 +32,8 @@
             lblSelectMessage = new Label();
             lblPieces = new Label();
             pnlChessBoard = new Panel();
+            lblTheme = new Label();
+            cmbColorThemes = new ComboBox();
             SuspendLayout();
             // 
             // cmbChessPieces
@@ -42,7 +44,6 @@
             cmbChessPieces.Name = "cmbChessPieces";
             cmbChessPieces.Size = new Size(121, 23);
             cmbChessPieces.TabIndex = 0;
-            cmbChessPieces.SelectedIndexChanged += this.comboBox1_SelectedIndexChanged;
             // 
             // lblSelectMessage
             // 
@@ -61,7 +62,6 @@
             lblPieces.Size = new Size(43, 15);
             lblPieces.TabIndex = 2;
             lblPieces.Text = "Pieces:";
-            lblPieces.Click += this.label2_Click;
             // 
             // pnlChessBoard
             // 
@@ -70,18 +70,38 @@
             pnlChessBoard.Size = new Size(500, 500);
             pnlChessBoard.TabIndex = 3;
             // 
+            // lblTheme
+            // 
+            lblTheme.AutoSize = true;
+            lblTheme.Location = new Point(518, 61);
+            lblTheme.Name = "lblTheme";
+            lblTheme.Size = new Size(47, 15);
+            lblTheme.TabIndex = 5;
+            lblTheme.Text = "Theme:";
+            // 
+            // cmbColorThemes
+            // 
+            cmbColorThemes.FormattingEnabled = true;
+            cmbColorThemes.Items.AddRange(new object[] { "Classic", "Cool", "Warm", "Neon", "Pastel" });
+            cmbColorThemes.Location = new Point(566, 58);
+            cmbColorThemes.Name = "cmbColorThemes";
+            cmbColorThemes.Size = new Size(121, 23);
+            cmbColorThemes.TabIndex = 4;
+            cmbColorThemes.SelectedIndexChanged += CmbColorThemesSelectedIndexChanged;
+            // 
             // FrmChessBoard
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(699, 546);
+            Controls.Add(lblTheme);
+            Controls.Add(cmbColorThemes);
             Controls.Add(pnlChessBoard);
             Controls.Add(lblPieces);
             Controls.Add(lblSelectMessage);
             Controls.Add(cmbChessPieces);
             Name = "FrmChessBoard";
             Text = "Chess Board";
-            Load += this.FrmChessBoard_Load;
             ResumeLayout(false);
             PerformLayout();
         }
@@ -92,5 +112,7 @@
         private Label lblSelectMessage;
         private Label lblPieces;
         private Panel pnlChessBoard;
+        private Label lblTheme;
+        private ComboBox cmbColorThemes;
     }
 }
