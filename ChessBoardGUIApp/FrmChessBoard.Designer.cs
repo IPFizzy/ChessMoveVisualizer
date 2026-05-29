@@ -81,6 +81,7 @@
             Controls.Add(cmbChessPieces);
             Name = "FrmChessBoard";
             Text = "Chess Board";
+            Load += this.FrmChessBoard_Load;
             ResumeLayout(false);
             PerformLayout();
         }
