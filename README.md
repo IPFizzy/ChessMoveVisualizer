@@ -104,7 +104,7 @@ In the console display, `+` represents a legal destination and the selected piec
 ## Architecture
 
 ```text
-ChessBoardClassLibrary/
+ChessMoveVisualizer/
 ├── ChessBoardClassLibrary/
 │   ├── Models/
 │   │   ├── BoardModel.cs
@@ -146,8 +146,8 @@ The GUI and console projects independently display the board while sharing the s
 Clone the repository:
 
 ```bash
-git clone https://github.com/IPFizzy/ChessBoardClassLibrary.git
-cd ChessBoardClassLibrary
+git clone https://github.com/IPFizzy/ChessMoveVisualizer.git
+cd ChessMoveVisualizer
 ```
 
 Open `ChessBoardClassLibrary.slnx` in Visual Studio.
@@ -173,12 +173,6 @@ dotnet build ChessBoardClassLibrary.slnx
 ## Practice Project Context
 
 This repository began as a focused exercise in class libraries, two-dimensional arrays, and object-oriented application design and is preserved as a completed practice project. The finished solution demonstrates board modeling, piece-specific algorithms, input validation, reusable business logic, dynamic Windows Forms controls, theming, and multiple presentation layers.
-
-## Recommended Repository Name
-
-For a public portfolio, **`ChessMoveVisualizer`** is a stronger repository name than `ChessBoardClassLibrary` because it describes what the finished application actually does rather than how its code is organized.
-
-The internal solution, project, folder, and namespace names can remain unchanged after the GitHub repository itself is renamed.
 
 ## Author
 
